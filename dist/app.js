@@ -11,6 +11,12 @@
   const label = cat => cat.kind === 'wild' ? 'Felino selvatico' : cat.kind === 'domestic' ? 'Specie domestica' : 'Razza domestica';
   const imageMarkup = (cat, className, lazy = true, fit = cat.photo?.fit) => cat.photo ? `<img class="${className}" style="object-fit:${fit==='contain'?'contain':'cover'}" src="${escape(cat.photo.src.startsWith('data:') ? cat.photo.src : './'+cat.photo.src)}" alt="${escape(cat.name)}" ${lazy ? 'loading="lazy"' : ''} decoding="async" width="700" height="700">` : `<div class="${className} text-portrait"><span aria-hidden="true">🐾</span><p>${escape(cat.scientific)}</p></div>`;
 
+
+  function detailPhoto(cat) {
+    const backdrop = cat.photo ? `<img class="detail-backdrop" src="${escape(cat.photo.src.startsWith('data:') ? cat.photo.src : './'+cat.photo.src)}" alt="" aria-hidden="true" decoding="async">` : '';
+    return `<div class="detail-photo">${backdrop}${imageMarkup(cat,'detail-image',false,'contain')}</div>`;
+  }
+
   function render() {
     const query = normalize(state.query.trim());
     state.visible = cats.filter(cat => (state.filter === 'all' || (state.filter === 'home' ? cat.kind !== 'wild' : cat.kind === 'wild')) && normalize([cat.name,cat.wiki.replaceAll('_',' '),cat.scientific,cat.place,cat.trait].join(' ')).includes(query));
@@ -28,14 +34,14 @@
   function credit(cat) {
     if(!cat.photo) return '';
     const p=cat.photo;
-    return `<details class="photo-credit"><summary>Fotografia e fonte</summary><p>${escape(p.title)} — ${escape(p.author)}.<br><a href="${escape(p.source)}" target="_blank" rel="noopener noreferrer">Fotografia originale</a> · ${p.licenseUrl?`<a href="${escape(p.licenseUrl)}" target="_blank" rel="noopener noreferrer">${escape(p.license)}</a>`:escape(p.license)}.<br>Immagine ridimensionata e convertita in WebP; ritaglio di visualizzazione. <a href="${escape(cat.source)}" target="_blank" rel="noopener noreferrer">Scheda di riferimento</a>.</p></details>`;
+    return `<details class="photo-credit"><summary>Fotografia e fonte</summary><p>${escape(p.title)} — ${escape(p.author)}.<br><a href="${escape(p.source)}" target="_blank" rel="noopener noreferrer">Fotografia originale</a> · ${p.licenseUrl?`<a href="${escape(p.licenseUrl)}" target="_blank" rel="noopener noreferrer">${escape(p.license)}</a>`:escape(p.license)}.<br>Immagine ridimensionata e convertita in WebP. Nella scheda la foto è intera, con una copia sfocata sullo sfondo. <a href="${escape(cat.source)}" target="_blank" rel="noopener noreferrer">Scheda di riferimento</a>.</p></details>`;
   }
   function openCat(id,updateHash=true) {
     const cat=cats.find(c=>c.id===id);if(!cat)return;
     if(!catDialog.open)state.opener=document.activeElement;
     state.current=id;
     const wild=cat.kind==='wild';
-    $('#cat-details').innerHTML=`<div class="detail-top">${imageMarkup(cat,'detail-image',false,'contain')}<div class="detail-copy"><span class="detail-type">${label(cat)}</span><h2 id="cat-title">${escape(cat.name)}</h2><p class="detail-scientific">${escape(cat.scientific)}</p><div class="fact-box"><strong>✦ Lo sapevi?</strong><p>${escape(cat.fact)}</p></div><dl class="detail-specs"><div><dt>${wild?'DOVE VIVE':cat.kind==='domestic'?'DOVE LO TROVI':'ORIGINE / SVILUPPO'}</dt><dd>${escape(cat.place)}</dd></div><div><dt>${wild?'IL SUO AMBIENTE':'IL SUO MANTELLO'}</dt><dd>${escape(cat.trait)}</dd></div></dl></div></div><p class="detail-footnote">${wild?'I felini selvatici si ammirano nel loro ambiente, a distanza e rispettando la loro libertà.':'Ogni gatto ha il suo carattere. Avvicinati con calma e lascia che sia lui a scegliere quando farsi accarezzare.'}</p>${credit(cat)}`;
+    $('#cat-details').innerHTML=`<div class="detail-top">${detailPhoto(cat)}<div class="detail-copy"><span class="detail-type">${label(cat)}</span><h2 id="cat-title">${escape(cat.name)}</h2><p class="detail-scientific">${escape(cat.scientific)}</p><div class="fact-box"><strong>✦ Lo sapevi?</strong><p>${escape(cat.fact)}</p></div><dl class="detail-specs"><div><dt>${wild?'DOVE VIVE':cat.kind==='domestic'?'DOVE LO TROVI':'ORIGINE / SVILUPPO'}</dt><dd>${escape(cat.place)}</dd></div><div><dt>${wild?'IL SUO AMBIENTE':'IL SUO MANTELLO'}</dt><dd>${escape(cat.trait)}</dd></div></dl></div></div><p class="detail-footnote">${wild?'I felini selvatici si ammirano nel loro ambiente, a distanza e rispettando la loro libertà.':'Ogni gatto ha il suo carattere. Avvicinati con calma e lascia che sia lui a scegliere quando farsi accarezzare.'}</p>${credit(cat)}`;
     const list=state.visible.some(c=>c.id===id)?state.visible:cats;
     const index=list.findIndex(c=>c.id===id);
     $('#dialog-position').textContent=`${index+1} di ${list.length}`;
@@ -72,7 +78,7 @@
     dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});
     dialog.addEventListener('close',()=>{if(!catDialog.open&&!infoDialog.open)document.body.style.overflow='';if(dialog===catDialog){updateURL(location.pathname+location.search);if(state.opener?.isConnected)state.opener.focus();}});
   });
-  document.addEventListener('error',event=>{const img=event.target;if(img.tagName==='IMG'&&!img.closest('.intro-art')){const box=document.createElement('div');box.className=img.className+' text-portrait';box.innerHTML=`<span aria-hidden="true">🐾</span><p>La foto non è disponibile.<br>La sua storia ti aspetta!</p>`;img.replaceWith(box);}},true);
+  document.addEventListener('error',event=>{const img=event.target;if(img.tagName==='IMG'&&!img.closest('.intro-art')){if(img.classList.contains('detail-backdrop')){img.remove();return;}const box=document.createElement('div');box.className=img.className+' text-portrait';box.innerHTML=`<span aria-hidden="true">🐾</span><p>La foto non è disponibile.<br>La sua storia ti aspetta!</p>`;img.replaceWith(box);}},true);
   render();
   const initial=location.hash.slice(1);if(cats.some(c=>c.id===initial))openCat(initial,false);
   window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(cats.some(c=>c.id===id))openCat(id,false);else if(catDialog.open)catDialog.close();});
