@@ -42,7 +42,7 @@
     $('#previous-cat').disabled=index===0;$('#next-cat').disabled=index===list.length-1;
     if(infoDialog.open)infoDialog.close();
     if(!catDialog.open){catDialog.showModal();document.body.style.overflow='hidden';}
-    catDialog.scrollTop=0;
+    catDialog.scrollTop=0;$('#cat-details').scrollTop=0;
     if(updateHash)updateURL('#'+id);
   }
   function stepCat(delta){
