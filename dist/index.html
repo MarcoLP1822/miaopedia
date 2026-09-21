@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6b7d1">
+  <meta name="description" content="Miaopedia: un piccolo mondo di gatti. Scopri razze domestiche e felini selvatici con fotografie e curiosità.">
+  <title>Miaopedia · Un mondo di gatti</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%23f9b9d0'/%3E%3Cpath d='M9 26V10l9 6h4l9-6v16q-11 13-22 0' fill='%23fff' stroke='%23623956' stroke-width='2'/%3E%3Ccircle cx='16' cy='24' r='1.5' fill='%23623956'/%3E%3Ccircle cx='25' cy='24' r='1.5' fill='%23623956'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <a class="skip" href="#collection">Vai ai gatti</a>
+  <header class="header"><a class="brand" href="./" aria-label="Miaopedia, inizio"><span class="brand-paw" aria-hidden="true">🐾</span> miaopedia<span class="brand-dot">.</span></a><button class="text-button" id="about-button"><span aria-hidden="true">✦</span> Specie o razza?</button></header>
+  <main>
+    <section class="intro"><div class="intro-copy"><p class="eyebrow"><span aria-hidden="true">✧</span> IL TUO PICCOLO ATLANTE FELINO</p><h1>Un mondo di <em>miao.</em></h1><p>Dai morbidi amici di casa ai cugini selvatici.<br>Conosciamoli, un musetto alla volta.</p><div class="intro-labels"><span>41 specie</span><span>45 razze</span><span class="fusa">Infinite fusa <span aria-hidden="true">♡</span></span></div></div><div class="intro-art"><img src="./assets/kittens.webp" width="1000" height="667" alt="Tre gattini illustrati si abbracciano, circondati da stelline" fetchpriority="high"><span class="hello" aria-hidden="true">Ciao, esploratrice! ♡</span></div></section>
+    <section id="collection" class="collection" aria-labelledby="collection-heading">
+      <div class="collection-title"><h2 id="collection-heading">Scegli un musetto <span aria-hidden="true">✿</span></h2><p id="result-count" role="status" aria-live="polite"></p></div>
+      <div class="explore-tools"><div class="filters" role="group" aria-label="Scegli quali gatti esplorare"><button class="filter active" data-filter="all" aria-pressed="true">Tutti <span id="all-count">86</span></button><button class="filter" data-filter="home" aria-pressed="false"><span aria-hidden="true">⌂</span> Amici di casa</button><button class="filter" data-filter="wild" aria-pressed="false"><span aria-hidden="true">♧</span> Felini selvatici</button></div><div class="search-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><label class="sr-only" for="search">Cerca un gatto per nome o luogo</label><input id="search" type="search" placeholder="Cerca un gatto…" autocomplete="off" maxlength="100"><kbd aria-hidden="true">⌕</kbd></div></div>
+      <p class="collection-hint" id="collection-hint">Tocca una scheda e scopri la sua storia.</p>
+      <div id="catalog" class="catalog"></div>
+      <div id="empty" class="empty" hidden><span aria-hidden="true">🐾</span><h3>Nessun musetto trovato</h3><p>Prova con un altro nome, oppure esplora tutti i gatti.</p><button class="pill-button" id="reset">Mostra tutti i gatti</button></div>
+    </section>
+    <aside class="little-note"><span aria-hidden="true">♡</span><p>Piccoli, grandi, con o senza pedigree.<br><strong>Ogni gatto merita gentilezza.</strong></p><span aria-hidden="true">✧</span></aside>
+  </main>
+  <footer><a class="brand footer-brand" href="./">miaopedia<span class="brand-dot">.</span></a><p>Un piccolo mondo da esplorare insieme.</p><button class="text-button" id="sources-button">Foto, fonti e catalogo <span aria-hidden="true">↗</span></button></footer>
+  <dialog id="cat-dialog" class="cat-dialog" aria-labelledby="cat-title"><button class="close-dialog" aria-label="Chiudi la scheda" autofocus>×</button><div id="cat-details"></div><div class="dialog-nav"><button id="previous-cat" class="text-button">← Precedente</button><span id="dialog-position"></span><button id="next-cat" class="text-button">Prossimo →</button></div></dialog>
+  <dialog id="info-dialog" class="info-dialog" aria-labelledby="info-title"><button class="close-dialog" aria-label="Chiudi" autofocus>×</button><div id="info-content"></div></dialog>
+  <noscript><p class="noscript">Attiva JavaScript per esplorare le 86 schede. Puoi anche visitare l'<a href="https://www.catsg.org/cats/livingspecies">elenco dei felini selvatici</a> e il <a href="https://cfa.org/breeds/">catalogo delle razze CFA</a>.</p></noscript>
+  <script src="./cats.js" defer></script>
+  <script src="./app.js" defer></script>
+</body>
+</html>
