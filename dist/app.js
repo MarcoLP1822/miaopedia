@@ -9,7 +9,7 @@
   const catDialog = $('#cat-dialog');
   const infoDialog = $('#info-dialog');
   const label = cat => cat.kind === 'wild' ? 'Felino selvatico' : cat.kind === 'domestic' ? 'Specie domestica' : 'Razza domestica';
-  const imageMarkup = (cat, className, lazy = true) => cat.photo ? `<img class="${className}" style="object-fit:${cat.photo.fit==='contain'?'contain':'cover'}" src="${escape(cat.photo.src.startsWith('data:') ? cat.photo.src : './'+cat.photo.src)}" alt="${escape(cat.name)}" ${lazy ? 'loading="lazy"' : ''} decoding="async" width="700" height="700">` : `<div class="${className} text-portrait"><span aria-hidden="true">🐾</span><p>${escape(cat.scientific)}</p></div>`;
+  const imageMarkup = (cat, className, lazy = true, fit = cat.photo?.fit) => cat.photo ? `<img class="${className}" style="object-fit:${fit==='contain'?'contain':'cover'}" src="${escape(cat.photo.src.startsWith('data:') ? cat.photo.src : './'+cat.photo.src)}" alt="${escape(cat.name)}" ${lazy ? 'loading="lazy"' : ''} decoding="async" width="700" height="700">` : `<div class="${className} text-portrait"><span aria-hidden="true">🐾</span><p>${escape(cat.scientific)}</p></div>`;
 
   function render() {
     const query = normalize(state.query.trim());
@@ -35,7 +35,7 @@
     if(!catDialog.open)state.opener=document.activeElement;
     state.current=id;
     const wild=cat.kind==='wild';
-    $('#cat-details').innerHTML=`<div class="detail-top">${imageMarkup(cat,'detail-image',false)}<div class="detail-copy"><span class="detail-type">${label(cat)}</span><h2 id="cat-title">${escape(cat.name)}</h2><p class="detail-scientific">${escape(cat.scientific)}</p><div class="fact-box"><strong>✦ Lo sapevi?</strong><p>${escape(cat.fact)}</p></div><dl class="detail-specs"><div><dt>${wild?'DOVE VIVE':cat.kind==='domestic'?'DOVE LO TROVI':'ORIGINE / SVILUPPO'}</dt><dd>${escape(cat.place)}</dd></div><div><dt>${wild?'IL SUO AMBIENTE':'IL SUO MANTELLO'}</dt><dd>${escape(cat.trait)}</dd></div></dl></div></div><p class="detail-footnote">${wild?'I felini selvatici si ammirano nel loro ambiente, a distanza e rispettando la loro libertà.':'Ogni gatto ha il suo carattere. Avvicinati con calma e lascia che sia lui a scegliere quando farsi accarezzare.'}</p>${credit(cat)}`;
+    $('#cat-details').innerHTML=`<div class="detail-top">${imageMarkup(cat,'detail-image',false,'contain')}<div class="detail-copy"><span class="detail-type">${label(cat)}</span><h2 id="cat-title">${escape(cat.name)}</h2><p class="detail-scientific">${escape(cat.scientific)}</p><div class="fact-box"><strong>✦ Lo sapevi?</strong><p>${escape(cat.fact)}</p></div><dl class="detail-specs"><div><dt>${wild?'DOVE VIVE':cat.kind==='domestic'?'DOVE LO TROVI':'ORIGINE / SVILUPPO'}</dt><dd>${escape(cat.place)}</dd></div><div><dt>${wild?'IL SUO AMBIENTE':'IL SUO MANTELLO'}</dt><dd>${escape(cat.trait)}</dd></div></dl></div></div><p class="detail-footnote">${wild?'I felini selvatici si ammirano nel loro ambiente, a distanza e rispettando la loro libertà.':'Ogni gatto ha il suo carattere. Avvicinati con calma e lascia che sia lui a scegliere quando farsi accarezzare.'}</p>${credit(cat)}`;
     const list=state.visible.some(c=>c.id===id)?state.visible:cats;
     const index=list.findIndex(c=>c.id===id);
     $('#dialog-position').textContent=`${index+1} di ${list.length}`;
