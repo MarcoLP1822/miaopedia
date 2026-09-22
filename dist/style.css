@@ -26,3 +26,5 @@
 .card-open:hover .preview-backdrop{transform:scale(1.18)}
 .card-open:hover .preview-image{transform:none}
 .photo-wrap .card-stamp{z-index:3}
+
+.header .brand-neko{margin-left:.35em;color:var(--pink);font-size:1.1em;line-height:1;font-weight:600;letter-spacing:0}
