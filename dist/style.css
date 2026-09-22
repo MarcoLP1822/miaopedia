@@ -17,3 +17,12 @@
 @media(max-width:420px){.card-arrow{display:none}.header .text-button{margin-left:auto}}
 
 .cat-history{padding:15px 17px;margin:0 0 22px;background:#fff3e8;border:1px solid #efdac7;border-radius:16px}.history-label{display:block;font-size:.75rem;letter-spacing:.045em;text-transform:uppercase;font-weight:850;color:#896449}.history-date{display:block;font-size:1.4rem;line-height:1.3;margin:4px 0;color:#745039}.cat-history p{font-size:.875rem;line-height:1.55;margin:7px 0;color:#785f58}.cat-history a{display:inline-block;font-size:.75rem;font-weight:800;line-height:1.5;padding:6px 0;color:#885239}
+
+/* Full photographs over a soft frosted backdrop, also in catalog previews. */
+.photo-wrap{isolation:isolate}
+.photo-wrap .preview-backdrop{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:center;transform:scale(1.18);filter:blur(18px) saturate(.8);opacity:.7;pointer-events:none;transition:none}
+.photo-wrap::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,#fff8f260,#f9ecff35 50%,#e8e5ff60);box-shadow:inset 0 0 0 1px #ffffff55;pointer-events:none}
+.photo-wrap .preview-image{position:absolute;inset:0;z-index:2;width:100%;height:100%;object-fit:contain;object-position:center;background:transparent;filter:drop-shadow(0 3px 7px #39263d20);transition:none}
+.card-open:hover .preview-backdrop{transform:scale(1.18)}
+.card-open:hover .preview-image{transform:none}
+.photo-wrap .card-stamp{z-index:3}
