@@ -1,3 +1,4 @@
 node_modules/
-.sites-runtime/
-.DS_Store
+.openai/*
+!.openai/hosting.json
+*.tar.gz
