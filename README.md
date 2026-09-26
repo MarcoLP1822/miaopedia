@@ -34,3 +34,14 @@ Each entry in `dist/cats.js` records its source page and image author, original 
 Nunito is distributed under the SIL Open Font License, included in `dist/assets/OFL-Nunito.txt`. The decorative kitten mascot was generated for this project and is not a factual breed portrait.
 
 Reference date: 20 September 2026.
+
+
+## Anteprima album (branch `design/kawaii-album`)
+
+Questa revisione aggiunge preferiti ed esplorati, schede con suggerimenti di osservazione, curiosità da svelare e storia espandibile. Le fotografie restano intere, in riquadri uniformi con sfondo sfocato. Le tre mascotte dell'illustrazione accompagnano le sezioni.
+
+L'album usa `localStorage` su questo browser/dispositivo; non invia dati e non richiede account. Se la memoria è bloccata, funziona per la sessione e lo segnala. L'anteprima su un dominio diverso ha un album separato dal sito pubblico.
+
+Controlli locali: `npm ci`, `npm run check`, `npm test`. Il sito rimane statico: GitHub Pages pubblica soltanto `dist/`, senza build o dipendenze runtime. I test DOM simulano le API del dialogo: non sostituiscono il controllo visivo su un browser reale.
+
+Il workflow Pages pubblica soltanto da `main`. Questo branch e la pull request non aggiornano il sito pubblico. L'anteprima privata è ospitata separatamente; il merge va eseguito solo dopo la revisione.
