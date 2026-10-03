@@ -57,3 +57,6 @@
 .card-bottom{margin-top:auto}
 .card-fact{margin-bottom:14px}
 .cat-card .card-arrow{background:transparent;color:#af6b79}
+
+/* The Korat source is a diptych: let its left portrait fill the preview. */
+.card-open[data-cat="b29"] .preview-image{width:205%;max-width:none;object-position:left top!important}
