@@ -44,3 +44,7 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 
 .filters .filter span[id]{display:inline-block}
+
+/* Edge-aligned preview crops fill every card; full photos remain in the dialog. */
+.photo-wrap .preview-image{object-fit:cover;filter:none}
+.photo-wrap::after{display:none}
