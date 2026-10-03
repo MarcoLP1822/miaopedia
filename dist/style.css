@@ -48,3 +48,12 @@
 /* Edge-aligned preview crops fill every card; full photos remain in the dialog. */
 .photo-wrap .preview-image{object-fit:cover;filter:none}
 .photo-wrap::after{display:none}
+
+/* Keep each card anchored at the top, independent of title wrapping. */
+.card-open{display:flex;flex-direction:column;justify-content:flex-start;align-items:stretch}
+.card-open>.photo-wrap{width:100%;flex:none}
+.card-body{display:flex;flex-direction:column;flex:1;min-width:0;width:100%}
+.card-body h3{min-height:2.6em}
+.card-bottom{margin-top:auto}
+.card-fact{margin-bottom:14px}
+.cat-card .card-arrow{background:transparent;color:#af6b79}
